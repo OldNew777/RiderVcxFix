@@ -1,0 +1,23 @@
+Observed in installed RD-263.7307.258; excerpts only, no JAR copied.
+Source: lib/intellij.rider.rdclient.dotnet.jar / intellij.rider.rdclient.dotnet.xml
+
+<extensionPoint qualifiedName="com.intellij.rider.protocol.hostEnvProvider" interface="com.jetbrains.rider.protocol.RiderBackendEnvProvider" dynamic="true"/>
+
+<applicationLoadHandler implementation="com.jetbrains.rider.RiderApplicationLoadListener" id="riderApplicationLoadListener"/>
+
+<listener topic="com.intellij.ide.AppLifecycleListener"
+          class="com.jetbrains.rider.protocol.RiderEBSPluginCacheHandler" />
+
+<listener class="com.jetbrains.rider.protocol.CriticalErrorApplicationTerminator"
+          topic="com.intellij.ide.AppLifecycleListener"
+
+<rider.protocol.hostEnvProvider implementation="com.jetbrains.rider.environment.RiderEnvironmentEnvProvider"/>
+<rider.protocol.hostEnvProvider implementation="com.jetbrains.rider.environment.RiderRestoreDesignTimeBuildEnvProvider"/>
+
+Verified product-info.json launch argument:
+-Didea.class.before.app=com.jetbrains.rider.protocol.EarlyBackendStarter
+
+Candidate registration syntax (not implemented):
+<extensions defaultExtensionNs="com.intellij">
+  <rider.protocol.hostEnvProvider implementation="local.rider.vcxfix.VcxBackendEnvProvider" order="last"/>
+</extensions>

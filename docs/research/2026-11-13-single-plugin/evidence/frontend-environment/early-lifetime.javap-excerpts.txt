@@ -1,0 +1,72 @@
+Existing javap output excerpts from RD-263.7307.258.
+
+CLASS com.jetbrains.rider.protocol.EarlyBackendStarter
+public com.jetbrains.rider.protocol.EarlyBackendStarter(java.io.File, java.io.File, java.io.File);
+  22: aload_0
+  23: new           #21   // class com/jetbrains/rd/util/lifetime/LifetimeDefinition
+  26: dup
+  27: invokespecial #77   // Method LifetimeDefinition."<init>":()V
+  30: putfield      #349  // Field lifetimeDef
+  ...
+ 638: aload_0
+ 639: new           #382  // class com/jetbrains/rider/protocol/EarlyReSharperProcess
+ 642: dup
+ 643: aload_0
+ 644: getfield      #349  // Field lifetimeDef
+ 647: invokevirtual #282  // Method LifetimeDefinition.getLifetime:()Lifetime
+  ...
+ 675: invokespecial #228  // Method EarlyReSharperProcess."<init>":(Lifetime;ILjava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)V
+
+CLASS com.jetbrains.rider.protocol.EarlyReSharperProcess
+public EarlyReSharperProcess(Lifetime, int, List<String>, String, String, Map<String,String>, String);
+  33: aload_0
+  34: aload_1
+  35: iload_2
+  36: iconst_0
+  37: aconst_null
+  38: bipush        8
+  40: aconst_null
+  41: invokespecial #26  // Method ReSharperProcessBase."<init>":(Lifetime;IZLjava/lang/Long;ILDefaultConstructorMarker;)V
+  ...
+  74: aload_0
+  75: invokevirtual #80  // Method start:()V
+
+The false boolean is Base.isLightweight; there is no early boolean in Base.
+Base fields were inspected: lifetime, serverPort, isLightweight, killedEbs, backendProcessLifetimeDef, requestShutdown.
+
+CLASS com.jetbrains.rider.protocol.ProtocolManager
+private final ProtocolHost h(Lifetime);
+   0: aload_1
+   1: invokevirtual #479  // Method Lifetime.createNested:()LifetimeDefinition
+   4: astore_2
+   5: aload_2
+   6: invokevirtual #583  // Method LifetimeDefinition.getLifetime:()Lifetime
+   9: astore_3
+  ...
+  23: aload         6
+  25: ifnull        59
+  ...
+  59: getstatic     #422  // Field logger
+  62: ldc           #14   // String Create protocol...
+  ...
+Review note: normal ReSharperProcess construction receives this nested lifetime.
+
+private final Pair<Protocol,DelayedServerWire> h(Application,Lifetime,EarlyBackendStarter);
+   0: aload_2
+   1: aload_3
+   2: invokedynamic #664  // InvokeDynamic #5:invoke:(EarlyBackendStarter;)Function0
+   7: invokevirtual #146  // Method Lifetime.onTermination:(Function0;)V
+  ...
+
+private static final Unit h(EarlyBackendStarter);
+   0: aload_0
+   1: invokevirtual #981  // Method EarlyBackendStarter.getLifetimeDef:()LifetimeDefinition
+   4: iconst_0
+   5: iconst_1
+   6: aconst_null
+   7: invokestatic  #303  // Method LifetimeDefinition.terminate$default
+  10: pop
+  11: getstatic     #375  // Field kotlin/Unit.INSTANCE
+  14: areturn
+
+Review note: early process initially has its independent root lifetime; accepted EBS is linked to normal lifetime termination through the above callback.

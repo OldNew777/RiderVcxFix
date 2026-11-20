@@ -1,0 +1,104 @@
+[
+  {
+    "Relative": "report.md",
+    "Source": "A:\\L66\\.tmp\\vcx-single-plugin-research.md",
+    "Sha256": "C9208079CB878402463473F2F1193758F383D8270F2F7B857ADA6A27A9E5FA5F",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\component-model-types.txt",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\component-model-types.txt",
+    "Sha256": "FBD74F895EEBA383CFC9158E8835C1AFA01B3FC0C24D69BB14555C06A867AFD8",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\ComponentAttribute.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\ComponentAttribute.cs",
+    "Sha256": "7CBE46C6A7973BEEDB5214C88ABA4AFF54226EB881BDF05E6A87A668B4EB2DB9",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\Instantiation.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\Instantiation.cs",
+    "Sha256": "BBA9EB2A4B05E0C66F48023AEC690E20540B93500CA22C30B67E9FA4E9BCBC5C",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\IStartupActivity.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\IStartupActivity.cs",
+    "Sha256": "4E0AAD31A3CA0A79E2BA549421E2AC16D1FEB4F75FED03901EE56D1616CDC9D5",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\IVcxFilterFeatureOverride.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\IVcxFilterFeatureOverride.cs",
+    "Sha256": "C201C3DD56871E32A9CF685A925BF86E8CFFC9B07942D7C522EC69C845D3FB68",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\NestedComponentContainerLeafsAndHidesByPartAttribute-3.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\NestedComponentContainerLeafsAndHidesByPartAttribute-3.cs",
+    "Sha256": "928AB88A1A025C791FCAA96F1D804176386B22FB72689452C0CFFE51811CCFFF",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\NotUsedByComponentContainerAttribute.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\NotUsedByComponentContainerAttribute.cs",
+    "Sha256": "F132E24D126199D990AFAD3284325F9A496E2DD52EF9DD23B914339899593962",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\PartAttribute.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\PartAttribute.cs",
+    "Sha256": "5204052B72258BEA3E8A68ACD0963CEF2B2579C680C510A70FE19B8A38FA6B06",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\VcxFiltersHelper.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-plugin-feasibility\\VcxFiltersHelper.cs",
+    "Sha256": "C9AD86FC39F7FCC99B0E2D835A7DA753594F273356D656C5B0FE86D043E14DD3",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\backend-component\\UnrealEngineVcxFilterOverride.cs",
+    "Source": "A:\\L66\\.tmp\\vcx-investigation\\decompiled\\JetBrains.ReSharperCpp.RiderPlugin.Unreal.UnrealEngineVcxFilterOverride.decompiled.cs",
+    "Sha256": "FFD20201D4CBB800DE6568BBC5E09AFB1E9779EB0EEB2FEAE4EFCC8C2EDB2CD1",
+    "OriginalRemoved": false
+  },
+  {
+    "Relative": "evidence\\frontend-view\\repair-point-bytecode.txt",
+    "Source": "A:\\L66\\.tmp\\vcx-investigation\\frontend\\repair-point-bytecode.txt",
+    "Sha256": "EE8B2527721D665DF0293436220ACD41A9D255B7CEA030902F8812A1E1F820F8",
+    "OriginalRemoved": false
+  },
+  {
+    "Relative": "evidence\\frontend-environment\\critical-callback.javap-excerpts.txt",
+    "Source": "A:\\L66\\.tmp\\vcx-investigation\\research\\frontend-env-api\\critical-callback.javap-excerpts.txt",
+    "Sha256": "77A52E46BB578292CB3545974F30A58F6BBC2249B7774BD9D83AEFE762AECCEB",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\frontend-environment\\early-lifetime.javap-excerpts.txt",
+    "Source": "A:\\L66\\.tmp\\vcx-investigation\\research\\frontend-env-api\\early-lifetime.javap-excerpts.txt",
+    "Sha256": "F991C581E7CD5A2F0DA8AF429CA3BF48C4917CC711F4CAB616EE38C6C8BC2907",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\frontend-environment\\extension-points.txt",
+    "Source": "A:\\L66\\.tmp\\vcx-investigation\\research\\frontend-env-api\\extension-points.txt",
+    "Sha256": "D517683CD5856FB14A202E042CE6DEAC041DD7EDC38CB6C4AAFBEE242E0D7C76",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\frontend-environment\\frontend-env-api-notes.md",
+    "Source": "A:\\L66\\.tmp\\vcx-investigation\\research\\frontend-env-api\\frontend-env-api-notes.md",
+    "Sha256": "3367DF0495D0FA8F2376D48A17D0ADAD18176204F5C7D39EB6FFB04E28BF0B35",
+    "OriginalRemoved": true
+  },
+  {
+    "Relative": "evidence\\frontend-environment\\metadata.json",
+    "Source": "A:\\L66\\.tmp\\vcx-investigation\\research\\frontend-env-api\\metadata.json",
+    "Sha256": "B221A97060F2A44FA83BCB4B3326E993B5EB038F275B29F79062CB0426E86196",
+    "OriginalRemoved": true
+  }
+]

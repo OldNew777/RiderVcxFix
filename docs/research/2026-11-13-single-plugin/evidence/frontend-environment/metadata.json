@@ -1,0 +1,23 @@
+{
+  "productCode": "RD",
+  "version": "2026.3",
+  "buildNumber": "263.7307.258",
+  "analysis": "Read-only static installed-artifact research; no runtime validation",
+  "javap": "C:\\Program Files\\Microsoft\\jdk-21.0.8.9-hotspot\\bin\\javap.exe",
+  "artifacts": [
+    {
+      "path": "C:\\Users\\chenxin47\\AppData\\Local\\Programs\\Rider 3\\lib\\intellij.rider.rdclient.dotnet.jar",
+      "sha256": "737A4DBAA95E1E9D89B7EFFDDBE5BF091CC37B63B2263C36CD3256EA6F52243D"
+    },
+    {
+      "path": "C:\\Users\\chenxin47\\AppData\\Local\\Programs\\Rider 3\\lib\\intellij.rider.rdclient.dotnet.startup.jar",
+      "sha256": "6917A41EC46F2DB20D83BB14D4924A042D2065B1086F5E05ED75B56E28C2DF15"
+    },
+    {
+      "path": "C:\\Users\\chenxin47\\AppData\\Local\\Programs\\Rider 3\\lib\\intellij.rider.lightweightBackend.jar",
+      "sha256": "1814A8768EC7089C2157A5D0677D8631F6DE3FAA601F64AE7A150BDD01F6F01C"
+    }
+  ],
+  "copiedUserConfigurationOrCache": false,
+  "implementedPlugin": false
+}

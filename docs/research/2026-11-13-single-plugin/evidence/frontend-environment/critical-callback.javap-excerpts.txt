@@ -1,0 +1,132 @@
+Existing javap output excerpts from RD-263.7307.258.
+
+CLASS com.jetbrains.rider.protocol.ReSharperProcessBase$start$processListener$1
+public void processTerminated(ProcessEvent);
+   6: aload_0
+   7: getfield      #171  // Field this$0
+  10: invokestatic  #208  // Method ReSharperProcessBase.access$getBackendProcessLifetimeDef$p
+  ...
+  27: invokestatic  #212  // Method LifetimeDefinition.terminate$default
+  ...
+  45: aload_0
+  46: getfield      #76   // Field $processDefinition
+  ...
+  52: invokestatic  #212  // Method LifetimeDefinition.terminate$default
+  ...
+  61: aload_0
+  62: getfield      #171  // Field this$0
+  65: invokevirtual #107  // Method ReSharperProcessBase.getRequestShutdown:()AtomicBoolean
+  68: invokevirtual #78   // Method AtomicBoolean.get:()Z
+  71: ifne          87
+  74: aload_0
+  75: getfield      #171  // Field this$0
+  78: invokevirtual #231  // Method ReSharperProcessBase.getLifetime:()Lifetime
+  81: invokestatic  #142  // Method RLifetimeKt.isAlive:(Lifetime;)Z
+  84: ifne          116
+  87: ... expected shutdown logging, then return at 115
+ 116: ... unexpected exit diagnostics
+ 178: aload_0
+ 179: getfield      #171  // Field this$0
+ 182: invokestatic  #252  // Method ReSharperProcessBase.access$isLightweight$p
+ 185: ifeq          189
+ 188: return
+ 189: ... playback-test path
+ 290: getstatic     #209  // Field CriticalErrorApplicationTerminator.Companion
+ 293: new           #160  // class ReSharperProcessBase$start$processListener$1$processTerminated$1
+ 296: dup
+ 297: aload_0
+ 298: getfield      #111  // Field $errFile
+ 301: aload_0
+ 302: getfield      #171  // Field this$0
+ 305: aconst_null
+ 306: invokespecial #55   // callback constructor
+ 309: checkcast     #251  // class kotlin/jvm/functions/Function2
+ 312: invokevirtual #246  // Method CriticalErrorApplicationTerminator$Companion.invokeLaterAfterAppStarted
+ 315: return
+
+Review note: the initial guards use parent getLifetime(), not the just-terminated backendProcessLifetimeDef/processDefinition. There is only a lightweight exemption; early process passes lightweight=false.
+
+CLASS com.jetbrains.rider.protocol.CriticalErrorApplicationTerminator$Companion
+public final void invokeLaterAfterAppStarted(Function2);
+   6: invokestatic  #31   // Method CriticalErrorApplicationTerminator.access$getActions$cp:()Channel
+   9: aload_1
+  10: invokeinterface #70 // InterfaceMethod Channel."trySend-JP2dKIU"
+  15: invokestatic  #33   // Method ChannelResult."isSuccess-impl"
+  18: ifne          29
+  21: invokestatic  #90   // Method CriticalErrorApplicationTerminator.access$getLogger$cp
+  24: ldc           #2    // String Failed to schedule action after application initialized.
+  26: invokevirtual #10   // Method Logger.error
+  29: return
+
+CLASS com.jetbrains.rider.protocol.CriticalErrorApplicationTerminator
+public void appStarted();
+   0: getstatic     #79   // Field RiderCoroutineScopes.INSTANCE
+   3: invokevirtual #44   // Method RiderCoroutineScopes.getApplicationScope:()CoroutineScope
+  ...
+  19: new           #107  // class CriticalErrorApplicationTerminator$appStarted$1
+  ...
+  32: invokestatic  #91   // Method BuildersKt.launch$default
+  35: pop
+  36: return
+
+static {};
+  ...
+  27: ldc           #4    // int 2147483647
+  29: aconst_null
+  30: aconst_null
+  31: bipush        6
+  33: aconst_null
+  34: invokestatic  #64   // Method ChannelKt.Channel$default
+  37: putstatic     #59   // Field actions:Channel
+
+CLASS com.jetbrains.rider.protocol.CriticalErrorApplicationTerminator$appStarted$1
+public final Object invokeSuspend(Object);
+ 202: aload         9
+ 204: invokeinterface #55 // InterfaceMethod ChannelIterator.next:()Object
+ 209: astore        10
+ 211: aload         10
+ 213: checkcast     #117  // class Function2
+ 216: astore        11
+  ...
+ 221: invokestatic  #116  // Method ApplicationManagerEx.getApplicationEx:()ApplicationEx
+ 224: astore        13
+ 226: aload         13
+ 228: ifnonnull     242
+ 231: ... appEx absent logging
+ 239: goto          402
+ 242: aload         11
+ 244: aload         13
+ 246: aload_0
+  ... coroutine state fields
+ 308: invokeinterface #14 // InterfaceMethod Function2.invoke:(Object;Object;)Object
+
+Review note: the entire consumer invokeSuspend was reviewed; no process lifetime/requestShutdown test occurs.
+
+CLASS com.jetbrains.rider.protocol.ReSharperProcessBase$start$processListener$1$processTerminated$1
+public final Object invokeSuspend(Object);
+  44: getstatic ... Dispatchers.INSTANCE
+  47: invokestatic #152  // Method CoroutinesKt.getEDT
+  50: new          #112  // class ReSharperProcessBase$start$processListener$1$processTerminated$1$1
+  ...
+  87: invokestatic #111  // Method BuildersKt.withContext
+
+CLASS com.jetbrains.rider.protocol.ReSharperProcessBase$start$processListener$1$processTerminated$1$1
+public final Object invokeSuspend(Object);
+  32: ... build diagnostics message
+  ...
+ 352: aload_0
+ 353: getfield      #55   // Field this$0
+ 356: aload_0
+ 357: getfield      #144  // Field $appEx
+ 360: aload_0
+ 361: getfield      #175  // Field $errFile
+ 364: aload_3
+ 365: invokevirtual #277 // Method StringBuilder.toString:()String
+ 368: dup
+ 369: ldc           #2   // String toString(...)
+ 371: invokestatic  #201 // Method Intrinsics.checkNotNullExpressionValue
+ 374: invokestatic  #94  // Method ReSharperProcessBase.access$showCrashDialog
+ 377: getstatic     #53  // Field kotlin/Unit.INSTANCE
+ 380: areturn
+
+Review note: both entire nested invokeSuspend methods were reviewed. No later lifetime/requestShutdown check; no early-process exemption. Cannot statically rule out a stale-hook EBS crash dialog already queued before cleanup.

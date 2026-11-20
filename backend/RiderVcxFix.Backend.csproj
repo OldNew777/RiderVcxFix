@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>RiderVcxFix.Backend</AssemblyName>
+    <RootNamespace>RiderVcxFix.Backend</RootNamespace>
+    <Version>2.0.2</Version>
+    <AssemblyVersion>2.0.2.0</AssemblyVersion>
+    <FileVersion>2.0.2.0</FileVersion>
+    <Description>Rider 2026.3 compatibility layer that lets Unreal Engine VCX filters honor the user UseFilters setting. Maintained by ChenXin (L66 Tools).</Description>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <RiderHostDir Condition="'$(RiderHostDir)' == ''">C:\Users\chenxin47\AppData\Local\Programs\Rider 3\lib\ReSharperHost</RiderHostDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JetBrains.Platform.Shell"><HintPath>$(RiderHostDir)\JetBrains.Platform.Shell.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.Platform.Core"><HintPath>$(RiderHostDir)\JetBrains.Platform.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.Platform.ComponentModel"><HintPath>$(RiderHostDir)\JetBrains.Platform.ComponentModel.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.Platform.Util"><HintPath>$(RiderHostDir)\JetBrains.Platform.Util.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.Lifetimes"><HintPath>$(RiderHostDir)\JetBrains.Lifetimes.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.ReSharperAutomationTools.CommandLine.Common"><HintPath>$(RiderHostDir)\JetBrains.ReSharperAutomationTools.CommandLine.Common.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Rider.Backend"><HintPath>$(RiderHostDir)\Rider.Backend.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>lib\0Harmony.dll</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+</Project>
+
+

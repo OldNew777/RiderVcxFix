@@ -1,0 +1,33 @@
+# Local archives, validation sandboxes, backups, and diagnostics
+.local-archive/
+validation/
+backups/
+diagnostics/
+
+# Build and packaging outputs
+artifacts/
+bundle/
+backend/bin/
+backend/obj/
+backend/artifacts/
+frontend/build/
+frontend/build-manifest.json
+frontend/frontend-package-check.json
+frontend/old-plugin-preservation-check.json
+frontend/source-copy-check.json
+
+# Runtime state and logs
+*.log
+*.lock
+install.json
+completion.json
+
+# IDE / OS artifacts
+.idea/
+.vs/
+.vscode/
+*.user
+*.suo
+*.DotSettings.user
+.DS_Store
+Thumbs.db

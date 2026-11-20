@@ -1,0 +1,352 @@
+SolutionExplorerModelNode.calculateChildren() -- bytecode slice; preceding model-child construction omitted
+  protected java.util.List<com.intellij.ide.util.treeView.AbstractTreeNode<?>> calculateChildren();
+    Code:
+     477: aload_0
+     478: getfield      #521                // Field settings:Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerViewSettings;
+     481: aload_0
+     482: invokevirtual #86                 // Method getProject:()Lcom/intellij/openapi/project/Project;
+     485: dup
+     486: ldc           #3                  // String getProject(...)
+     488: invokestatic  #45                 // Method kotlin/jvm/internal/Intrinsics.checkNotNullExpressionValue:(Ljava/lang/Object;Ljava/lang/String;)V
+     491: invokeinterface #240,  2          // InterfaceMethod com/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerViewSettings.isShowAllFiles:(Lcom/intellij/openapi/project/Project;)Z
+     496: ifeq          506
+     499: aload_0
+     500: aload_1
+     501: aload_2
+     502: aload_3
+     503: invokespecial #93                 // Method h:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;Ljava/util/List;Ljava/util/List;)V
+     506: getstatic     #1040               // Field com/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization.Companion:Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization$Companion;
+     509: aload_0
+     510: getfield      #658                // Field myProject:Lcom/intellij/openapi/project/Project;
+     513: dup
+     514: ldc           #1                  // String myProject
+     516: invokestatic  #45                 // Method kotlin/jvm/internal/Intrinsics.checkNotNullExpressionValue:(Ljava/lang/Object;Ljava/lang/String;)V
+     519: invokevirtual #904                // Method com/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization$Companion.getExtensions:(Lcom/intellij/openapi/project/Project;)[Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization;
+     522: astore        5
+     524: iconst_0
+     525: istore        6
+     527: iconst_0
+     528: istore        7
+     530: aload         5
+     532: arraylength
+     533: istore        8
+     535: iload         7
+     537: iload         8
+     539: if_icmpge     580
+     542: aload         5
+     544: iload         7
+     546: aaload
+     547: astore        9
+     549: aload         9
+     551: astore        10
+     553: iconst_0
+     554: istore        11
+     556: aload_3
+     557: aload         10
+     559: aload_1
+     560: invokevirtual #197                // Method com/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization.getChildren:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)Ljava/util/List;
+     563: checkcast     #824                // class java/util/Collection
+     566: invokeinterface #165,  2          // InterfaceMethod java/util/List.addAll:(Ljava/util/Collection;)Z
+     571: pop
+     572: nop
+     573: nop
+     574: iinc          7, 1
+     577: goto          535
+     580: nop
+     581: getstatic     #1040               // Field com/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization.Companion:Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization$Companion;
+     584: aload_0
+     585: getfield      #658                // Field myProject:Lcom/intellij/openapi/project/Project;
+     588: dup
+     589: ldc           #1                  // String myProject
+     591: invokestatic  #45                 // Method kotlin/jvm/internal/Intrinsics.checkNotNullExpressionValue:(Ljava/lang/Object;Ljava/lang/String;)V
+     594: invokevirtual #904                // Method com/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization$Companion.getExtensions:(Lcom/intellij/openapi/project/Project;)[Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization;
+     597: astore        5
+     599: iconst_0
+     600: istore        6
+     602: iconst_0
+     603: istore        7
+     605: aload         5
+     607: arraylength
+     608: istore        8
+     610: iload         7
+     612: iload         8
+     614: if_icmpge     650
+     617: aload         5
+     619: iload         7
+     621: aaload
+     622: astore        9
+     624: aload         9
+     626: astore        10
+     628: iconst_0
+     629: istore        11
+     631: aload         10
+     633: aload_1
+     634: aload_0
+     635: getfield      #521                // Field settings:Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerViewSettings;
+     638: aload_3
+     639: invokevirtual #752                // Method com/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerCustomization.modifyChildren:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerViewSettings;Ljava/util/List;)V
+     642: nop
+     643: nop
+     644: iinc          7, 1
+     647: goto          610
+     650: nop
+
+SolutionExplorerModelNode hidden physical children builder -- beginning/physical-file creation
+  private final void h(com.jetbrains.rider.projectView.workspace.ProjectModelEntity, java.util.List<? extends com.jetbrains.rider.projectView.workspace.ProjectModelEntity>, java.util.List<com.intellij.ide.util.treeView.AbstractTreeNode<?>>);
+    Code:
+       0: aload_1
+       1: invokestatic  #74                 // Method com/jetbrains/rider/projectView/workspace/ProjectModelEntityExtensionsKt.getVirtualFileAsContentRoot:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)Lcom/intellij/openapi/vfs/VirtualFile;
+       4: astore        4
+       6: aload         4
+       8: ifnull        343
+      11: aload         4
+      13: invokevirtual #722                // Method com/intellij/openapi/vfs/VirtualFile.isDirectory:()Z
+      16: ifeq          343
+      19: aload_1
+      20: invokestatic  #583                // Method com/jetbrains/rider/projectView/workspace/ProjectModelEntityExtensionsKt.getAffectedVirtualFiles:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)Ljava/util/HashSet;
+      23: astore        5
+      25: aload_2
+      26: invokeinterface #157,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      31: astore        6
+      33: aload         6
+      35: invokeinterface #848,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      40: ifeq          66
+      43: aload         6
+      45: invokeinterface #917,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      50: checkcast     #174                // class com/jetbrains/rider/projectView/workspace/ProjectModelEntity
+      53: astore        7
+      55: aload         7
+      57: aload         5
+      59: iconst_1
+      60: invokestatic  #325                // Method com/jetbrains/rider/projectView/workspace/ProjectModelEntityExtensionsKt.fillAffectedVirtualFilesRecursive:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;Ljava/util/HashSet;Z)V
+      63: goto          33
+      66: aload_1
+      67: invokestatic  #180                // Method com/jetbrains/rider/projectView/workspace/ProjectModelEntityExtensionsKt.isSolution:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)Z
+      70: ifne          80
+      73: aload_1
+      74: invokestatic  #575                // Method com/jetbrains/rider/projectView/workspace/ProjectModelEntityExtensionsKt.isSolutionFolder:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)Z
+      77: ifeq          97
+      80: new           #552                // class com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode$addHiddenChildren$visitor$1
+      83: dup
+      84: aload         5
+      86: invokespecial #106                // Method com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode$addHiddenChildren$visitor$1."<init>":(Ljava/util/HashSet;)V
+      89: astore        6
+      91: aload         6
+      93: aload_1
+      94: invokevirtual #309                // Method com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode$addHiddenChildren$visitor$1.visit:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)V
+      97: new           #161                // class java/util/ArrayList
+     100: dup
+     101: invokespecial #262                // Method java/util/ArrayList."<init>":()V
+     104: checkcast     #625                // class java/util/List
+     107: astore        6
+     109: aload         4
+     111: invokestatic  #204                // Method com/jetbrains/rider/projectView/views/SolutionViewUtilsKt.getChildrenForSolutionView:(Lcom/intellij/openapi/vfs/VirtualFile;)Ljava/util/List;
+     114: invokeinterface #157,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     119: astore        7
+     121: aload         7
+     123: invokeinterface #848,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     128: ifeq          212
+     131: aload         7
+     133: invokeinterface #917,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     138: checkcast     #304                // class com/intellij/openapi/vfs/VirtualFile
+     141: astore        8
+     143: aload         8
+     145: invokevirtual #722                // Method com/intellij/openapi/vfs/VirtualFile.isDirectory:()Z
+     148: ifeq          199
+     151: aload         5
+     153: aload         8
+     155: invokevirtual #452                // Method java/util/HashSet.contains:(Ljava/lang/Object;)Z
+     158: ifne          196
+     161: aload_3
+     162: new           #370                // class com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerFileNode
+     165: dup
+     166: aload_0
+     167: getfield      #658                // Field myProject:Lcom/intellij/openapi/project/Project;
+     170: dup
+     171: ldc           #1                  // String myProject
+     173: invokestatic  #45                 // Method kotlin/jvm/internal/Intrinsics.checkNotNullExpressionValue:(Ljava/lang/Object;Ljava/lang/String;)V
+     176: aload         8
+     178: invokestatic  #128                // Method kotlin/collections/CollectionsKt.emptyList:()Ljava/util/List;
+     181: aload_0
+     182: getfield      #521                // Field settings:Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerViewSettings;
+     185: iconst_0
+     186: iconst_0
+     187: invokespecial #650                // Method com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerFileNode."<init>":(Lcom/intellij/openapi/project/Project;Lcom/intellij/openapi/vfs/VirtualFile;Ljava/util/List;Lcom/jetbrains/rider/projectView/views/solutionExplorer/SolutionExplorerViewSettings;ZZ)V
+     190: invokeinterface #983,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     195: pop
+     196: goto          121
+     199: aload         6
+
+SolutionExplorerCustomization hook signature + default body
+  public void modifyChildren(com.jetbrains.rider.projectView.workspace.ProjectModelEntity, com.jetbrains.rider.projectView.views.solutionExplorer.SolutionExplorerViewSettings, java.util.List<com.intellij.ide.util.treeView.AbstractTreeNode<?>>);
+    Code:
+       0: aload_1
+       1: ldc           #7                  // String entity
+       3: invokestatic  #152                // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+       6: aload_2
+       7: ldc           #2                  // String settings
+       9: invokestatic  #152                // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+      12: aload_3
+      13: ldc           #12                 // String children
+      15: invokestatic  #152                // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+      18: return
+
+
+
+ProjectModelEntityExtensionsKt.getVirtualFileAsContentRoot() -- filter branch
+  public static final com.intellij.openapi.vfs.VirtualFile getVirtualFileAsContentRoot(com.jetbrains.rider.projectView.workspace.ProjectModelEntity);
+    Code:
+       0: aload_0
+       1: ldc           #1                  // String <this>
+       3: invokestatic  #485                // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+       6: aload_0
+       7: invokeinterface #937,  1          // InterfaceMethod com/jetbrains/rider/projectView/workspace/ProjectModelEntity.getDescriptor:()Lcom/jetbrains/rider/model/RdProjectModelItemDescriptor;
+      12: instanceof    #347                // class com/jetbrains/rider/model/RdVcxFilterDescriptor
+      15: ifeq          35
+      18: aload_0
+      19: invokestatic  #278                // Method containingProjectEntity:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;
+      22: dup
+      23: ifnull        32
+      26: invokestatic  #606                // Method getVirtualFileAsContentRoot:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)Lcom/intellij/openapi/vfs/VirtualFile;
+      29: goto          34
+      32: pop
+      33: aconst_null
+      34: areturn
+      35: aload_0
+
+SolutionExplorerCustomization hook signature + default body
+  public void modifyChildren(com.jetbrains.rider.projectView.workspace.ProjectModelEntity, com.jetbrains.rider.projectView.views.solutionExplorer.SolutionExplorerViewSettings, java.util.List<com.intellij.ide.util.treeView.AbstractTreeNode<?>>);
+    Code:
+       0: aload_1
+       1: ldc           #89                 // String entity
+       3: invokestatic  #15                 // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+       6: aload_2
+       7: ldc           #91                 // String settings
+       9: invokestatic  #15                 // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+      12: aload_3
+      13: ldc           #93                 // String children
+      15: invokestatic  #15                 // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+      18: getstatic     #67                 // Field Companion:Lcom/jetbrains/rider/cpp/projectView/VcxSolutionExplorerCustomization$Companion;
+      21: aload_0
+      22: invokespecial #69                 // Method isVcxFiltersActive:()Z
+      25: aload_1
+      26: invokestatic  #74                 // Method com/jetbrains/rider/projectView/workspace/ProjectModelEntityExtensionsKt.isFromVcxProject:(Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;)Z
+      29: invokevirtual #96                 // Method com/jetbrains/rider/cpp/projectView/VcxSolutionExplorerCustomization$Companion.shouldParticipate:(ZZ)Z
+      32: ifne          36
+      35: return
+      36: new           #98                 // class java/util/HashSet
+      39: dup
+      40: invokespecial #101                // Method java/util/HashSet."<init>":()V
+      43: astore        4
+      45: aload_3
+      46: invokeinterface #107,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      51: astore        5
+      53: aload         5
+      55: invokeinterface #112,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      60: ifeq          132
+      63: aload         5
+      65: invokeinterface #115,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      70: checkcast     #117                // class com/intellij/ide/util/treeView/AbstractTreeNode
+      73: astore        6
+      75: aload         6
+      77: instanceof    #119                // class com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode
+      80: ifeq          53
+      83: aload         6
+      85: checkcast     #119                // class com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode
+      88: invokevirtual #123                // Method com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode.getEntity:()Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;
+      91: dup
+      92: ifnull        103
+      95: invokeinterface #127,  1          // InterfaceMethod com/jetbrains/rider/projectView/workspace/ProjectModelEntity.getDescriptor:()Lcom/jetbrains/rider/model/RdProjectModelItemDescriptor;
+     100: goto          105
+     103: pop
+     104: aconst_null
+     105: astore        7
+     107: aload         7
+     109: instanceof    #129                // class com/jetbrains/rider/model/RdVcxFilterDescriptor
+     112: ifeq          53
+     115: aload         4
+     117: aload         7
+     119: checkcast     #129                // class com/jetbrains/rider/model/RdVcxFilterDescriptor
+     122: invokevirtual #133                // Method com/jetbrains/rider/model/RdVcxFilterDescriptor.getName:()Ljava/lang/String;
+     125: invokevirtual #137                // Method java/util/HashSet.add:(Ljava/lang/Object;)Z
+     128: pop
+     129: goto          53
+     132: aload         4
+     134: invokevirtual #140                // Method java/util/HashSet.isEmpty:()Z
+     137: ifeq          141
+     140: return
+     141: aload_3
+     142: aload         4
+     144: invokedynamic #160,  0            // InvokeDynamic #0:invoke:(Ljava/util/HashSet;)Lkotlin/jvm/functions/Function1;
+     149: invokestatic  #166                // Method kotlin/collections/CollectionsKt.removeAll:(Ljava/util/List;Lkotlin/jvm/functions/Function1;)Z
+     152: pop
+     153: return
+
+
+
+public final class com.jetbrains.rider.projectView.views.solutionExplorer.nodes.SolutionExplorerFileNode extends com.jetbrains.rider.projectView.views.SolutionViewNode<com.intellij.openapi.vfs.VirtualFile> {
+rider-cpp.jar!META-INF/plugin.xml
+extensions {'defaultExtensionNs': 'com.intellij'}
+<solutionExplorerCustomization implementation="com.jetbrains.rider.cpp.projectView.UnrealSolutionExplorerCustomization" />
+<solutionExplorerCustomization implementation="com.jetbrains.rider.cpp.projectView.VcxSolutionExplorerCustomization" />
+SHA256 46A3E2D5E60F9644425226DB1B161DFCD82529CB446B3FA4F03CA95B8BCDB36B A:\L66\.tmp\vcx-investigation\frontend\lib\intellij.rider.jar
+SHA256 737A4DBAA95E1E9D89B7EFFDDBE5BF091CC37B63B2263C36CD3256EA6F52243D A:\L66\.tmp\vcx-investigation\frontend\lib\intellij.rider.rdclient.dotnet.jar
+SHA256 C81773F59D8A03CD5B4FF91A62DA93AB4FDF0FF8FC0AE0CD0C3AC208FA51061B A:\L66\.tmp\vcx-investigation\frontend\lib\rider-cpp.jar
+Original installation: C:\Users\chenxin47\AppData\Local\Programs\Rider 3\lib\{intellij.rider.jar,intellij.rider.rdclient.dotnet.jar}; plugins\rider-cpp\lib\rider-cpp.jar
+
+public class com.jetbrains.rider.projectView.views.solutionExplorer.nodes.SolutionExplorerModelNode extends com.jetbrains.rider.projectView.views.SolutionViewNode<com.jetbrains.rider.projectView.workspace.ProjectModelEntityReference> implements com.jetbrains.rider.projectView.views.ClickableNode, com.jetbrains.rider.projectView.views.SolutionViewEntityOwner {
+
+VcxSolutionExplorerCustomization existing cleanup predicate
+  private static final boolean modifyChildren$lambda$0(java.util.HashSet, com.intellij.ide.util.treeView.AbstractTreeNode);
+    Code:
+       0: aload_1
+       1: ldc           #219                // String child
+       3: invokestatic  #15                 // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+       6: aload_1
+       7: instanceof    #119                // class com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode
+      10: ifne          15
+      13: iconst_0
+      14: ireturn
+      15: aload_1
+      16: checkcast     #119                // class com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode
+      19: invokevirtual #123                // Method com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode.getEntity:()Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;
+      22: dup
+      23: ifnull        34
+      26: invokeinterface #127,  1          // InterfaceMethod com/jetbrains/rider/projectView/workspace/ProjectModelEntity.getDescriptor:()Lcom/jetbrains/rider/model/RdProjectModelItemDescriptor;
+      31: goto          36
+      34: pop
+      35: aconst_null
+      36: astore_2
+      37: aload_2
+      38: instanceof    #208                // class com/jetbrains/rider/model/RdProjectFolderDescriptor
+      41: ifne          51
+      44: aload_2
+      45: instanceof    #206                // class com/jetbrains/rider/model/RdSolutionFolderDescriptor
+      48: ifeq          86
+      51: aload_0
+      52: checkcast     #221                // class java/lang/Iterable
+      55: aload_1
+      56: checkcast     #119                // class com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode
+      59: invokevirtual #123                // Method com/jetbrains/rider/projectView/views/solutionExplorer/nodes/SolutionExplorerModelNode.getEntity:()Lcom/jetbrains/rider/projectView/workspace/ProjectModelEntity;
+      62: dup
+      63: ifnull        74
+      66: invokeinterface #193,  1          // InterfaceMethod com/jetbrains/rider/projectView/workspace/ProjectModelEntity.getName:()Ljava/lang/String;
+      71: goto          76
+      74: pop
+      75: aconst_null
+      76: invokestatic  #225                // Method kotlin/collections/CollectionsKt.contains:(Ljava/lang/Iterable;Ljava/lang/Object;)Z
+      79: ifeq          86
+      82: iconst_1
+      83: goto          87
+      86: iconst_0
+      87: ireturn
+
+  static {};
+    Code:
+       0: new           #76                 // class com/jetbrains/rider/cpp/projectView/VcxSolutionExplorerCustomization$Companion
+       3: dup
+       4: aconst_null
+       5: invokespecial #232                // Method com/jetbrains/rider/cpp/projectView/VcxSolutionExplorerCustomization$Companion."<init>":(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+       8: putstatic     #67                 // Field Companion:Lcom/jetbrains/rider/cpp/projectView/VcxSolutionExplorerCustomization$Companion;
+      11: return
+}
