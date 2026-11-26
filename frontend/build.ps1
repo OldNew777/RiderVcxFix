@@ -13,10 +13,10 @@ $taskArtifacts = Join-Path $taskUnified 'artifacts'
 if ([string]::IsNullOrWhiteSpace($BackendArtifacts)) { $BackendArtifacts = Join-Path $taskUnified 'backend\artifacts' }
 $taskBuild = Join-Path $taskRoot 'build'
 $taskBundle = Join-Path $taskUnified 'bundle\rider-vcx-filters-fix'
-$taskExpectedBuild = '263.7307.258'
+$taskPluginVersion = '2.1.1'
 $taskInfo = Get-Content -LiteralPath (Join-Path $RiderHome 'product-info.json') -Raw | ConvertFrom-Json
-if ($taskInfo.productCode -ne 'RD' -or $taskInfo.buildNumber -ne $taskExpectedBuild) {
-    throw "This plugin is reviewed for Rider RD-$taskExpectedBuild; found $($taskInfo.productCode)-$($taskInfo.buildNumber)."
+if ($taskInfo.productCode -ne 'RD' -or -not $taskInfo.buildNumber.StartsWith('263.', [System.StringComparison]::Ordinal)) {
+    throw "This plugin targets Rider 2026.3 (RD-263.*); found $($taskInfo.productCode)-$($taskInfo.buildNumber)."
 }
 if ([string]::IsNullOrWhiteSpace($JavaHome)) {
     $JavaHome = Join-Path $RiderHome 'jbr'
@@ -30,10 +30,13 @@ $taskClasspath = (Join-Path $RiderHome 'lib\*') + ';' + (Join-Path $RiderHome 'p
 $taskClasses = Join-Path $taskBuild 'classes'
 $taskTestClasses = Join-Path $taskBuild 'test-classes'
 $taskLib = Join-Path $taskBundle 'lib'
+if (Test-Path -LiteralPath $taskClasses) { Remove-Item -LiteralPath $taskClasses -Recurse -Force }
+if (Test-Path -LiteralPath $taskTestClasses) { Remove-Item -LiteralPath $taskTestClasses -Recurse -Force }
 New-Item -ItemType Directory -Path $taskBuild, $taskClasses, $taskTestClasses, $taskLib -Force | Out-Null
 
-$taskSource = Join-Path $taskRoot 'src\local\rider\vcxfix\VcxFilterViewFix.java'
-& $taskJavac --release 21 -encoding UTF-8 -classpath $taskClasspath -d $taskClasses $taskSource
+$taskSources = @(Get-ChildItem -LiteralPath (Join-Path $taskRoot 'src') -Filter '*.java' -Recurse -File | Sort-Object FullName | ForEach-Object { $_.FullName })
+if ($taskSources.Count -eq 0) { throw 'No Java source files found under frontend/src.' }
+& $taskJavac --release 21 -encoding UTF-8 -classpath $taskClasspath -d $taskClasses @taskSources
 if ($LASTEXITCODE -ne 0) { throw "javac failed: $LASTEXITCODE" }
 $taskPluginJar = Join-Path $taskLib 'vcx-filter-view-fix.jar'
 Add-Type -AssemblyName System.IO.Compression
@@ -43,7 +46,7 @@ function New-TaskArchive([string]$TaskPath, [object[]]$TaskEntries) {
     try {
         foreach ($taskFile in ($TaskEntries | Sort-Object entry)) {
             $taskEntry = $taskArchive.CreateEntry($taskFile.entry, [System.IO.Compression.CompressionLevel]::Optimal)
-            $taskEntry.LastWriteTime = [DateTimeOffset]::new(2026, 11, 13, 0, 0, 0, [TimeSpan]::Zero)
+            $taskEntry.LastWriteTime = [DateTimeOffset]::new(2026, 11, 20, 0, 0, 0, [TimeSpan]::Zero)
             $taskEntryStream = $taskEntry.Open()
             $taskInputStream = [System.IO.File]::OpenRead($taskFile.source)
             try { $taskInputStream.CopyTo($taskEntryStream) }
@@ -52,8 +55,11 @@ function New-TaskArchive([string]$TaskPath, [object[]]$TaskEntries) {
     }
     finally { $taskArchive.Dispose(); $taskArchiveStream.Dispose() }
 }
-$taskJarEntries = @(
-    @{ source = Join-Path $taskClasses 'local\rider\vcxfix\VcxFilterViewFix.class'; entry = 'local/rider/vcxfix/VcxFilterViewFix.class' },
+$taskClassEntries = @(Get-ChildItem -LiteralPath $taskClasses -Filter '*.class' -Recurse -File | ForEach-Object {
+    $rel = $_.FullName.Substring($taskClasses.Length + 1).Replace('\', '/')
+    @{ source = $_.FullName; entry = $rel }
+})
+$taskJarEntries = $taskClassEntries + @(
     @{ source = Join-Path $taskRoot 'resources\META-INF\plugin.xml'; entry = 'META-INF/plugin.xml' }
 )
 New-TaskArchive $taskPluginJar $taskJarEntries
@@ -68,10 +74,10 @@ if (-not $FrontendOnly) {
             throw "Missing backend artifact: $taskBackendSource. Use -FrontendOnly to compile the JAR separately."
         }
         $taskBackendTarget = Join-Path $taskDotnet $taskBackendName
-        Copy-Item -LiteralPath $taskBackendSource -Destination $taskBackendTarget
+        Copy-Item -LiteralPath $taskBackendSource -Destination $taskBackendTarget -Force
         $taskBackendItems += @{ source = $taskBackendTarget; entry = 'rider-vcx-filters-fix/dotnet/' + $taskBackendName }
     }
-    $taskZip = Join-Path $taskArtifacts 'rider-vcx-filters-fix-2.0.2.zip'
+    $taskZip = Join-Path $taskArtifacts "rider-vcx-filters-fix-$taskPluginVersion.zip"
     $taskArchiveItems = @(@{ source = $taskPluginJar; entry = 'rider-vcx-filters-fix/lib/vcx-filter-view-fix.jar' }) + $taskBackendItems
     New-TaskArchive $taskZip $taskArchiveItems
 }
@@ -89,7 +95,7 @@ $taskDependencies = foreach ($taskRelativePath in $taskDependencyNames) {
     $taskPath = Join-Path $RiderHome $taskRelativePath
     [ordered]@{ path = $taskPath; sha256 = (Get-FileHash -LiteralPath $taskPath -Algorithm SHA256).Hash }
 }
-$taskFixtureResult = 'not run; algorithm and fixture copied from previously verified 1.0.0'
+$taskFixtureResult = 'not run'
 if ($RunFixture) {
     $taskFixtureSource = Join-Path $taskRoot 'tests\local\rider\vcxfix\VcxFilterViewFixFixture.java'
     & $taskJavac --release 21 -encoding UTF-8 -classpath ($taskPluginJar + ';' + $taskClasspath) -d $taskTestClasses $taskFixtureSource
@@ -101,7 +107,7 @@ if ($RunFixture) {
 
 $taskManifest = [ordered]@{
     pluginId = 'local.rider.vcx-filter-view-fix'
-    pluginVersion = '2.0.2'
+    pluginVersion = $taskPluginVersion
     riderVersion = $taskInfo.version
     riderBuild = $taskInfo.buildNumber
     javaReleaseTarget = 21

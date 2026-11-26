@@ -20,7 +20,7 @@ public final class VcxFilterViewFix extends SolutionExplorerCustomization {
 
     public VcxFilterViewFix(Project project) {
         super(project);
-        LOG.info("[VcxFilterViewFix] active plugin=local.rider.vcx-filter-view-fix version=2.0.2");
+        LOG.info("[VcxFilterViewFix] active plugin=local.rider.vcx-filter-view-fix version=2.1.1");
     }
 
     @Override

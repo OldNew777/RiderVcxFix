@@ -8,16 +8,29 @@ $ErrorActionPreference = 'Stop'
 $vcxBackendRoot = $PSScriptRoot
 $vcxHostRoot = (Resolve-Path -LiteralPath $RiderHostDir).Path
 $vcxProductInfoPath = Join-Path (Split-Path -Parent (Split-Path -Parent $vcxHostRoot)) 'product-info.json'
+$vcxBuildNumber = 'unknown'
 if (Test-Path -LiteralPath $vcxProductInfoPath) {
     $vcxBuildNumber = (Get-Content -LiteralPath $vcxProductInfoPath -Raw | ConvertFrom-Json).buildNumber
-    if ($vcxBuildNumber -ne '263.7307.258') {
-        throw "This plugin targets 263.7307.258; supplied Rider build is $vcxBuildNumber."
+    if (-not $vcxBuildNumber.StartsWith('263.', [System.StringComparison]::Ordinal)) {
+        throw "This plugin targets Rider 2026.3 (263.*); supplied Rider build is $vcxBuildNumber."
     }
 }
 $vcxApiNames = @(
-    'JetBrains.Platform.Shell.dll', 'JetBrains.Platform.Core.dll',
-    'JetBrains.Platform.ComponentModel.dll', 'JetBrains.Platform.Util.dll',
-    'JetBrains.Lifetimes.dll', 'Rider.Backend.dll', 'JetBrains.ReSharperAutomationTools.CommandLine.Common.dll'
+    'JetBrains.Platform.Shell.dll',
+    'JetBrains.Platform.Core.dll',
+    'JetBrains.Platform.ComponentModel.dll',
+    'JetBrains.Platform.Util.dll',
+    'JetBrains.Platform.ProjectModel.dll',
+    'JetBrains.Platform.ProjectModel.Host.dll',
+    'JetBrains.Platform.DocumentManager.dll',
+    'JetBrains.Platform.RdProtocol.dll',
+    'JetBrains.RdFramework.dll',
+    'JetBrains.RdBackend.Common.dll',
+    'JetBrains.ReSharper.Feature.Services.dll',
+    'JetBrains.ReSharperCpp.RiderPlugin.dll',
+    'JetBrains.Lifetimes.dll',
+    'Rider.Backend.dll',
+    'JetBrains.ReSharperAutomationTools.CommandLine.Common.dll'
 )
 foreach ($vcxApiName in $vcxApiNames) {
     if (!(Test-Path -LiteralPath (Join-Path $vcxHostRoot $vcxApiName))) {
@@ -54,9 +67,9 @@ $vcxHostReferences = foreach ($vcxApiName in $vcxApiNames) {
     }
 }
 [ordered]@{
-    targetBuild = 'RD-263.7307.258'
+    targetBuild = "RD-$vcxBuildNumber"
     targetFramework = 'net10.0'
-    pluginVersion = '2.0.2'
+    pluginVersion = '2.1.1'
     pluginDotnetFiles = @($vcxPackaged)
     hostReferences = @($vcxHostReferences)
     notes = @(
@@ -66,6 +79,4 @@ $vcxHostReferences = foreach ($vcxApiName in $vcxApiNames) {
         'No startup hook or backend environment provider is used.'
     )
 } | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $vcxArtifacts 'dependencies.json') -Encoding utf8
-Write-Host "Backend ready: $vcxArtifacts"
-
-
+Write-Host "Backend ready (RD-$vcxBuildNumber): $vcxArtifacts"

@@ -1,12 +1,16 @@
 package local.rider.vcxfix;
 
 import com.intellij.ide.util.treeView.AbstractTreeNode;
+import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.project.Project;
 import com.jetbrains.rd.ide.model.RdPath;
 import com.jetbrains.rider.model.RdCustomLocation;
 import com.jetbrains.rider.model.RdProjectDescriptor;
+import com.jetbrains.rider.model.RdProjectFolderDescriptor;
 import com.jetbrains.rider.model.RdProjectModelItemDescriptor;
+import com.jetbrains.rider.model.RdSolutionFolderDescriptor;
 import com.jetbrains.rider.model.RdVcxFilterDescriptor;
+import com.jetbrains.rider.projectView.ProjectModelDataKeys;
 import com.jetbrains.rider.projectView.views.solutionExplorer.SolutionExplorerViewSettings;
 import com.jetbrains.rider.projectView.views.solutionExplorer.nodes.SolutionExplorerFileNode;
 import com.jetbrains.rider.projectView.views.solutionExplorer.nodes.SolutionExplorerModelNode;
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/** Tests the actual extension method with actual Rider descriptor and node classes, without an IDE. */
+/** Tests the actual extension and action classes with real Rider descriptors, without an IDE. */
 public final class VcxFilterViewFixFixture {
     public static void main(String[] args) throws Exception {
         Project project = proxy(Project.class, null);
@@ -45,6 +49,16 @@ public final class VcxFilterViewFixFixture {
         extension.modifyChildren(filterEntity, settings, children);
         require(children.equals(List.of(filterNode, filterFileNode)), "Filtering twice must be idempotent.");
 
+        // Folder-presented VCX filters (RdProjectFolderDescriptor) must keep real Show All Files additions.
+        RdProjectFolderDescriptor folderDescriptor = new RdProjectFolderDescriptor(
+            false, false, false, false, null, null, "ShaderLab",
+            new RdCustomLocation(new RdPath("A:/fixture/Shaders/Private/ShaderLab", "A:/fixture/Shaders/Private/ShaderLab")), false);
+        ProjectModelEntity folderEntity = proxy(ProjectModelEntity.class, folderDescriptor);
+        List<AbstractTreeNode<?>> folderChildren = new ArrayList<>(List.of(filterNode, physicalDirectory, physicalFile));
+        extension.modifyChildren(folderEntity, settings, folderChildren);
+        require(folderChildren.equals(List.of(filterNode, physicalDirectory, physicalFile)),
+                "A resolved folder descriptor must retain real Show All Files additions.");
+
         RdProjectModelItemDescriptor projectDescriptor = (RdProjectDescriptor) unsafe.allocateInstance(RdProjectDescriptor.class);
         ProjectModelEntity projectEntity = proxy(ProjectModelEntity.class, projectDescriptor);
         List<AbstractTreeNode<?>> projectChildren = new ArrayList<>(List.of(filterNode, physicalDirectory, physicalFile));
@@ -55,8 +69,37 @@ public final class VcxFilterViewFixFixture {
         List<AbstractTreeNode<?>> emptyChildren = new ArrayList<>();
         extension.modifyChildren(filterEntity, settings, emptyChildren);
         require(emptyChildren.isEmpty(), "An empty filter must stay empty.");
-        System.out.println("PASS: real Rider API filtering, preserved model children/order, project-root boundary, idempotence, empty filter.");
+
+        // Verify VcxNewDirectoryAction enablement rules.
+        VcxNewDirectoryAction newDirAction = (VcxNewDirectoryAction) unsafe.allocateInstance(VcxNewDirectoryAction.class);
+        require("NewDirectory".equals(newDirAction.defaultName()), "defaultName must be NewDirectory.");
+        require("".equals(newDirAction.defaultExtension()), "defaultExtension must be empty.");
+
+        DataContext virtualFilterCtx = dataContextWithEntity(filterEntity);
+        require(!newDirAction.isEnabled(virtualFilterCtx),
+                "New Directory must remain disabled on pure virtual RdVcxFilterDescriptor nodes.");
+
+        RdSolutionFolderDescriptor slnFolderDesc = (RdSolutionFolderDescriptor) unsafe.allocateInstance(RdSolutionFolderDescriptor.class);
+        DataContext slnFolderCtx = dataContextWithEntity(proxy(ProjectModelEntity.class, slnFolderDesc));
+        require(!newDirAction.isEnabled(slnFolderCtx),
+                "New Directory must remain disabled on solution folders.");
+
+        DataContext folderCtx = dataContextWithEntity(folderEntity);
+        require(newDirAction.isEnabled(folderCtx),
+                "New Directory must be enabled on folder-presented VCX filter nodes.");
+
+        System.out.println("PASS: VcxFilterViewFix + VcxNewDirectoryAction fixture checks all passed.");
         System.out.println("LIMIT: inert actual node instances and interface proxies; no live IDE services, rendering, or UI exercised.");
+    }
+
+    @SuppressWarnings("removal")
+    private static DataContext dataContextWithEntity(ProjectModelEntity entity) {
+        return dataId -> {
+            if (ProjectModelDataKeys.INSTANCE.getPROJECT_MODEL_ENTITY_ARRAY().getName().equals(dataId)) {
+                return new ProjectModelEntity[] { entity };
+            }
+            return null;
+        };
     }
 
     private static Unsafe unsafe() throws Exception {

@@ -1,33 +1,39 @@
 <idea-plugin require-restart="true">
   <id>local.rider.vcx-filter-view-fix</id>
   <name>Rider VCX Filters Fix</name>
-  <version>2.0.2</version>
+  <version>2.1.1</version>
   <vendor>ChenXin (L66 Tools)</vendor>
   <description><![CDATA[
     <b>Rider VCX Filters Fix</b> is an offline compatibility plugin for large Unreal Engine C++ solutions opened in JetBrains Rider 2026.3.<br/>
     <br/>
-    It combines two cooperating fixes in one package:<br/>
+    It combines cooperating frontend and backend fixes in one package:<br/>
     <ul>
-      <li><b>Solution Explorer frontend:</b> prevents <i>Show All Files</i> from inserting duplicate physical project-directory files beneath virtual VCX filter nodes, while preserving the real model nodes, their order, and project-root files.</li>
-      <li><b>.NET backend:</b> neutralizes Unreal's forced VCX-filter disabling so the user's <b>Use VCX project filters</b> setting is honored, including turning filters off normally.</li>
+      <li><b>.NET backend — VCX filter enablement:</b> neutralizes Unreal's forced VCX-filter disabling so the user's <b>Use VCX project filters</b> setting is honored, including turning filters off normally.</li>
+      <li><b>.NET backend — real folder presentation &amp; operations:</b> resolves VCX filters that correspond to real disk directories and presents them as standard project folders (without funnel icons), routes Copy/Paste, New File/Directory, Move, Rename, and Delete to the real directory instead of <code>Intermediate\ProjectFiles</code>, and keeps <code>.vcxproj</code> and <code>.vcxproj.filters</code> synchronized.</li>
+      <li><b>JVM frontend:</b> restores the <b>New Directory</b> action on VCX folder nodes (creating both the physical folder and the matching <code>.vcxproj.filters</code> entry) and prevents <i>Show All Files</i> from inserting duplicate physical files beneath any remaining pure-virtual VCX filters.</li>
     </ul>
     <b>Compatibility:</b> JetBrains Rider 2026.3 (branch 263) and later.<br/>
-    <b>Verified build:</b> RD-263.7307.258. Future Rider releases are permitted by the open compatibility range, but should be revalidated because this plugin uses internal Rider APIs.<br/>
     <b>Maintainer:</b> ChenXin (L66 Tools).<br/>
     <b>Plugin ID:</b> local.rider.vcx-filter-view-fix.<br/>
     <br/>
-    The plugin does not modify project files or user settings, does not require startup hooks or ReadyToRun overrides, and requires a full Rider restart after installation, update, disablement, or removal.
+    Requires a full Rider restart after installation, update, disablement, or removal.
   ]]></description>
   <change-notes><![CDATA[
+    <b>2.1.1</b><br/>
+    <ul>
+      <li>Present VCX filters backed by real disk directories as normal project folders (removing funnel icons and restoring standard folder behavior across UE5 and game projects).</li>
+      <li>Fixed Copy/Paste on files and folders so duplicated files are created in the real target directory and added to the active <code>.vcxproj</code> and <code>.vcxproj.filters</code> instead of falling into <code>Intermediate\ProjectFiles</code> as non-project files.</li>
+      <li>Restored folder Ctrl+V paste, right-click New File / New Directory (syncing empty directories into <code>.vcxproj.filters</code>), Explorer drag-and-drop, and folder Move/Rename/Delete compatibility.</li>
+    </ul>
     <b>2.0.2</b><br/>
-    Changed the compatibility declaration from the exact RD-263.7307.258 build to Rider 2026.3 and later by using since-build=&quot;263&quot; without an until-build limit. The filter algorithms and backend patch are unchanged.<br/>
-    <br/>
-    <b>2.0.1</b><br/>
-    Enriched the author and plugin description, documented the combined frontend/backend behavior and exact Rider build requirements, and rebuilt the unified package without changing the filter algorithms.
+    Changed the compatibility declaration from the exact RD-263.7307.258 build to Rider 2026.3 and later by using since-build=&quot;263&quot; without an until-build limit.
   ]]></change-notes>
   <idea-version since-build="263" />
   <depends>com.intellij.modules.rider</depends>
   <extensions defaultExtensionNs="com.intellij">
     <solutionExplorerCustomization implementation="local.rider.vcxfix.VcxFilterViewFix" order="last" />
   </extensions>
+  <actions>
+    <action id="NewDir" class="local.rider.vcxfix.VcxNewDirectoryAction" overrides="true" />
+  </actions>
 </idea-plugin>

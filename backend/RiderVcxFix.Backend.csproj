@@ -3,10 +3,10 @@
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>RiderVcxFix.Backend</AssemblyName>
     <RootNamespace>RiderVcxFix.Backend</RootNamespace>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.2.0</AssemblyVersion>
-    <FileVersion>2.0.2.0</FileVersion>
-    <Description>Rider 2026.3 compatibility layer that lets Unreal Engine VCX filters honor the user UseFilters setting. Maintained by ChenXin (L66 Tools).</Description>
+    <Version>2.1.1</Version>
+    <AssemblyVersion>2.1.1.0</AssemblyVersion>
+    <FileVersion>2.1.1.0</FileVersion>
+    <Description>Rider 2026.3 compatibility layer that enables Unreal Engine VCX filters with real folder presentation, copy/paste, new file/directory, and drag-drop support. Maintained by ChenXin (L66 Tools).</Description>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <Deterministic>true</Deterministic>
@@ -20,11 +20,17 @@
     <Reference Include="JetBrains.Platform.Core"><HintPath>$(RiderHostDir)\JetBrains.Platform.Core.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="JetBrains.Platform.ComponentModel"><HintPath>$(RiderHostDir)\JetBrains.Platform.ComponentModel.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="JetBrains.Platform.Util"><HintPath>$(RiderHostDir)\JetBrains.Platform.Util.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.Platform.ProjectModel"><HintPath>$(RiderHostDir)\JetBrains.Platform.ProjectModel.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.Platform.ProjectModel.Host"><HintPath>$(RiderHostDir)\JetBrains.Platform.ProjectModel.Host.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.Platform.DocumentManager"><HintPath>$(RiderHostDir)\JetBrains.Platform.DocumentManager.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.Platform.RdProtocol"><HintPath>$(RiderHostDir)\JetBrains.Platform.RdProtocol.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.RdFramework"><HintPath>$(RiderHostDir)\JetBrains.RdFramework.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.RdBackend.Common"><HintPath>$(RiderHostDir)\JetBrains.RdBackend.Common.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.ReSharper.Feature.Services"><HintPath>$(RiderHostDir)\JetBrains.ReSharper.Feature.Services.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="JetBrains.ReSharperCpp.RiderPlugin"><HintPath>$(RiderHostDir)\JetBrains.ReSharperCpp.RiderPlugin.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="JetBrains.Lifetimes"><HintPath>$(RiderHostDir)\JetBrains.Lifetimes.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="JetBrains.ReSharperAutomationTools.CommandLine.Common"><HintPath>$(RiderHostDir)\JetBrains.ReSharperAutomationTools.CommandLine.Common.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="Rider.Backend"><HintPath>$(RiderHostDir)\Rider.Backend.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="0Harmony"><HintPath>lib\0Harmony.dll</HintPath><Private>true</Private></Reference>
   </ItemGroup>
 </Project>
-
-

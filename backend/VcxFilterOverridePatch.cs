@@ -58,6 +58,7 @@ public sealed class VcxFilterOverridePatch
         private readonly Harmony Harmony = new(HarmonyOwner);
         private readonly ConditionalWeakTable<object, DetectorProbe> Probes = new();
         private MethodInfo? Target;
+        private List<MethodBase> FolderPatchedMethods = new();
         private FieldInfo? DetectorField;
         private MethodInfo? DetectorGetter;
         private bool Attempted;
@@ -147,12 +148,15 @@ public sealed class VcxFilterOverridePatch
                         throw new InvalidOperationException("Harmony did not report this owner's prefix after Patch");
                     Volatile.Write(ref Enabled, 1);
                     Diagnostics.Write($"patch-installed owner={HarmonyOwner} owners={FormatOwners(installed)} stableProperty={PropertyIdentity} value={FalseProperty.Value} awaiting-real-getter-call=true");
+                    FolderPatchedMethods = VcxFilterFolderViewPatch.Install(Harmony, HarmonyOwner);
                 }
                 catch (Exception exception)
                 {
                     Volatile.Write(ref Enabled, 0);
                     try
                     {
+                        VcxFilterFolderViewPatch.Uninstall(Harmony, HarmonyOwner, FolderPatchedMethods);
+                        FolderPatchedMethods.Clear();
                         if (Target != null)
                             Harmony.Unpatch(Target, HarmonyPatchType.Prefix, HarmonyOwner);
                     }
@@ -219,6 +223,8 @@ public sealed class VcxFilterOverridePatch
                 }
                 try
                 {
+                    VcxFilterFolderViewPatch.Uninstall(Harmony, HarmonyOwner, FolderPatchedMethods);
+                    FolderPatchedMethods.Clear();
                     if (Target != null)
                         Harmony.Unpatch(Target, HarmonyPatchType.Prefix, HarmonyOwner);
                     Diagnostics.Write($"shell-terminated owner={HarmonyOwner} totalGetterCalls={GetterCalls} own-prefix-removed=true");
